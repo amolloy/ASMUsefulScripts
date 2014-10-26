@@ -15,8 +15,10 @@
   "platforms": {
     "ios": "7.0"
   },
-  "requires_arc": true,
   "resources": [
     "Scripts/*"
-  ]
+  ],
+  "xcconfig": {
+  	 "ASMUsefulScripts": "${PODS_ROOT}/ASMUsefulScripts/Scripts"
+  }
 }
