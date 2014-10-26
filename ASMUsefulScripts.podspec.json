@@ -1,6 +1,6 @@
 {
   "name": "ASMUsefulScripts",
-  "version": "0.1",
+  "version": "0.3",
   "summary": "Some useful scripts to be added as run script phases.",
   "description": "Scripts I use for stuff.",
   "homepage": "http://andymolloy.net",
@@ -15,7 +15,7 @@
   "platforms": {
     "ios": "7.0"
   },
-  "resources": [
+  "preserve_paths": [
     "Scripts/*"
   ],
   "xcconfig": {
