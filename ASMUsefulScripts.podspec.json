@@ -1,0 +1,22 @@
+{
+  "name": "ASMUsefulScripts",
+  "version": "0.1",
+  "summary": "Some useful scripts to be added as run script phases.",
+  "description": "Scripts I use for stuff.",
+  "homepage": "http://andymolloy.net",
+  "license": "MIT",
+  "authors": {
+    "Andy Molloy": "amolloy@gmail.com"
+  },
+  "source": {
+    "git": "https://amolloy@bitbucket.org/amolloy/asmusefulscripts.git"
+  },
+  "social_media_url": "https://twitter.com/amolloy",
+  "platforms": {
+    "ios": "7.0"
+  },
+  "requires_arc": true,
+  "resources": [
+    "Scripts/*"
+  ]
+}
