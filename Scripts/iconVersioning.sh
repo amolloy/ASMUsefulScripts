@@ -18,7 +18,7 @@ branch="${branch}->${BUNDLE_DISPLAY_NAME_SUFFIX}"
 caption="$build_num\n${branch}\n${commit}"
 
 function processIcon() {
-	iconFile=$1
+	iconFile=$*
 	storedIconFile=$iconFile.tmp
 	normalizedIconFile=$iconFile.normalized
 
@@ -35,8 +35,8 @@ function processIcon() {
     # Rename normalized png's filename to original one
     mv "${normalizedIconFile}" "${iconFile}"
     
-    width=`identify -format %w ${iconFile}`
-    height=`identify -format %h ${iconFile}`
+    width=`identify -format %w "${iconFile}"`
+    height=`identify -format %h "${iconFile}"`
     band_height=$((($height * 47) / 100))
     band_position=$(($height - $band_height))
     text_position=$(($band_position - 3))
@@ -46,12 +46,12 @@ function processIcon() {
     # blur band and text
     #
     tmpDir=$(mktemp -dt "\$0")
-    convert ${iconFile} -blur 10x8 ${tmpDir}/blurred.png
+    convert "${iconFile}" -blur 10x8 ${tmpDir}/blurred.png
     convert ${tmpDir}/blurred.png -gamma 0 -fill white -draw "rectangle 0,$band_position,$width,$height" ${tmpDir}/mask.png
     convert -size ${width}x${band_height} xc:none -fill 'rgba(0,0,0,0.2)' -draw "rectangle 0,0,$width,$band_height" ${tmpDir}/labels-base.png
     convert -background none -size ${width}x${band_height} -pointsize $point_size -fill white -gravity center -gravity South caption:"$caption" ${tmpDir}/labels.png
     
-    convert ${iconFile} ${tmpDir}/blurred.png ${tmpDir}/mask.png -composite ${tmpDir}/temp.png
+    convert "${iconFile}" ${tmpDir}/blurred.png ${tmpDir}/mask.png -composite ${tmpDir}/temp.png
 
     #
     # compose final image
@@ -63,8 +63,6 @@ function processIcon() {
     rm -r ${tmpDir}
 }
 
-iconFiles="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AppIcon*.png"
-
-for file in $iconFiles; do
-	processIcon $file
-done
+export caption
+export -f processIcon
+find "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}" -name "AppIcon*.png"  -exec bash -c 'processIcon "$0"' {} \;
